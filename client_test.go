@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dstotijn/go-notion"
+	"github.com/jonnyspicer/go-notion"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
