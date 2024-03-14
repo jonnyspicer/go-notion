@@ -22,6 +22,7 @@ type Block interface {
 	HasChildren() bool
 	Archived() bool
 	BlockType() BlockType
+	Extras() interface{}
 	json.Marshaler
 }
 
@@ -81,6 +82,7 @@ type baseBlock struct {
 	hasChildren    bool
 	archived       bool
 	blockType      BlockType
+	extras         interface{}
 }
 
 // ID returns the identifier (UUIDv4) for the block.
@@ -118,6 +120,10 @@ func (b baseBlock) Parent() Parent {
 
 func (b baseBlock) BlockType() BlockType {
 	return b.blockType
+}
+
+func (b baseBlock) Extras() interface{} {
+	return b.extras
 }
 
 type ParagraphBlock struct {
@@ -988,6 +994,9 @@ func (dto blockDTO) Block() (Block, error) {
 		return dto.Toggle, nil
 	case BlockTypeChildPage:
 		baseBlock.blockType = BlockTypeChildPage
+		baseBlock.extras = map[string]string{
+			"title": dto.ChildPage.Title,
+		}
 		dto.ChildPage.baseBlock = baseBlock
 		return dto.ChildPage, nil
 	case BlockTypeChildDatabase:
