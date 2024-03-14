@@ -13,9 +13,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jonnyspicer/go-notion"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	"github.com/jonnyspicer/go-notion"
 )
 
 type mockRoundtripper struct {
@@ -3024,6 +3024,7 @@ func TestFindBlockChildrenById(t *testing.T) {
 		lastEditedTime time.Time
 		hasChildren    bool
 		archived       bool
+		blockType      string
 	}
 
 	tests := []struct {
@@ -3124,6 +3125,7 @@ func TestFindBlockChildrenById(t *testing.T) {
 					lastEditedTime: mustParseTime(time.RFC3339, "2021-05-14T09:15:00.000Z"),
 					hasChildren:    false,
 					archived:       false,
+					blockType:      "paragraph",
 				},
 				{
 					id:             "5e113754-eae4-4da9-96d2-675977acce99",
@@ -3131,6 +3133,7 @@ func TestFindBlockChildrenById(t *testing.T) {
 					lastEditedTime: mustParseTime(time.RFC3339, "2021-05-14T09:15:00.000Z"),
 					hasChildren:    false,
 					archived:       false,
+					blockType:      "paragraph",
 				},
 			},
 			expError: nil,

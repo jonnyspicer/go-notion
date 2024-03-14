@@ -21,6 +21,7 @@ type Block interface {
 	LastEditedTime() time.Time
 	HasChildren() bool
 	Archived() bool
+	BlockType() BlockType
 	json.Marshaler
 }
 
@@ -79,6 +80,7 @@ type baseBlock struct {
 	lastEditedBy   BaseUser
 	hasChildren    bool
 	archived       bool
+	blockType      BlockType
 }
 
 // ID returns the identifier (UUIDv4) for the block.
@@ -112,6 +114,10 @@ func (b baseBlock) Archived() bool {
 
 func (b baseBlock) Parent() Parent {
 	return b.parent
+}
+
+func (b baseBlock) BlockType() BlockType {
+	return b.blockType
 }
 
 type ParagraphBlock struct {
@@ -949,102 +955,135 @@ func (dto blockDTO) Block() (Block, error) {
 
 	switch dto.Type {
 	case BlockTypeParagraph:
+		baseBlock.blockType = BlockTypeParagraph
 		dto.Paragraph.baseBlock = baseBlock
 		return dto.Paragraph, nil
 	case BlockTypeHeading1:
+		baseBlock.blockType = BlockTypeHeading1
 		dto.Heading1.baseBlock = baseBlock
 		return dto.Heading1, nil
 	case BlockTypeHeading2:
+		baseBlock.blockType = BlockTypeHeading2
 		dto.Heading2.baseBlock = baseBlock
 		return dto.Heading2, nil
 	case BlockTypeHeading3:
+		baseBlock.blockType = BlockTypeHeading3
 		dto.Heading3.baseBlock = baseBlock
 		return dto.Heading3, nil
 	case BlockTypeBulletedListItem:
+		baseBlock.blockType = BlockTypeBulletedListItem
 		dto.BulletedListItem.baseBlock = baseBlock
 		return dto.BulletedListItem, nil
 	case BlockTypeNumberedListItem:
+		baseBlock.blockType = BlockTypeNumberedListItem
 		dto.NumberedListItem.baseBlock = baseBlock
 		return dto.NumberedListItem, nil
 	case BlockTypeToDo:
+		baseBlock.blockType = BlockTypeToDo
 		dto.ToDo.baseBlock = baseBlock
 		return dto.ToDo, nil
 	case BlockTypeToggle:
+		baseBlock.blockType = BlockTypeToggle
 		dto.Toggle.baseBlock = baseBlock
 		return dto.Toggle, nil
 	case BlockTypeChildPage:
+		baseBlock.blockType = BlockTypeChildPage
 		dto.ChildPage.baseBlock = baseBlock
 		return dto.ChildPage, nil
 	case BlockTypeChildDatabase:
+		baseBlock.blockType = BlockTypeChildDatabase
 		dto.ChildDatabase.baseBlock = baseBlock
 		return dto.ChildDatabase, nil
 	case BlockTypeCallout:
+		baseBlock.blockType = BlockTypeCallout
 		dto.Callout.baseBlock = baseBlock
 		return dto.Callout, nil
 	case BlockTypeQuote:
+		baseBlock.blockType = BlockTypeQuote
 		dto.Quote.baseBlock = baseBlock
 		return dto.Quote, nil
 	case BlockTypeCode:
+		baseBlock.blockType = BlockTypeCode
 		dto.Code.baseBlock = baseBlock
 		return dto.Code, nil
 	case BlockTypeEmbed:
+		baseBlock.blockType = BlockTypeEmbed
 		dto.Embed.baseBlock = baseBlock
 		return dto.Embed, nil
 	case BlockTypeImage:
+		baseBlock.blockType = BlockTypeImage
 		dto.Image.baseBlock = baseBlock
 		return dto.Image, nil
 	case BlockTypeAudio:
+		baseBlock.blockType = BlockTypeAudio
 		dto.Audio.baseBlock = baseBlock
 		return dto.Audio, nil
 	case BlockTypeVideo:
+		baseBlock.blockType = BlockTypeVideo
 		dto.Video.baseBlock = baseBlock
 		return dto.Video, nil
 	case BlockTypeFile:
+		baseBlock.blockType = BlockTypeFile
 		dto.File.baseBlock = baseBlock
 		return dto.File, nil
 	case BlockTypePDF:
+		baseBlock.blockType = BlockTypePDF
 		dto.PDF.baseBlock = baseBlock
 		return dto.PDF, nil
 	case BlockTypeBookmark:
+		baseBlock.blockType = BlockTypeBookmark
 		dto.Bookmark.baseBlock = baseBlock
 		return dto.Bookmark, nil
 	case BlockTypeEquation:
+		baseBlock.blockType = BlockTypeEquation
 		dto.Equation.baseBlock = baseBlock
 		return dto.Equation, nil
 	case BlockTypeDivider:
+		baseBlock.blockType = BlockTypeDivider
 		dto.Divider.baseBlock = baseBlock
 		return dto.Divider, nil
 	case BlockTypeTableOfContents:
+		baseBlock.blockType = BlockTypeTableOfContents
 		dto.TableOfContents.baseBlock = baseBlock
 		return dto.TableOfContents, nil
 	case BlockTypeBreadCrumb:
+		baseBlock.blockType = BlockTypeBreadCrumb
 		dto.Breadcrumb.baseBlock = baseBlock
 		return dto.Breadcrumb, nil
 	case BlockTypeColumnList:
+		baseBlock.blockType = BlockTypeColumnList
 		dto.ColumnList.baseBlock = baseBlock
 		return dto.ColumnList, nil
 	case BlockTypeColumn:
+		baseBlock.blockType = BlockTypeColumn
 		dto.Column.baseBlock = baseBlock
 		return dto.Column, nil
 	case BlockTypeTable:
+		baseBlock.blockType = BlockTypeTable
 		dto.Table.baseBlock = baseBlock
 		return dto.Table, nil
 	case BlockTypeTableRow:
+		baseBlock.blockType = BlockTypeTableRow
 		dto.TableRow.baseBlock = baseBlock
 		return dto.TableRow, nil
 	case BlockTypeLinkPreview:
+		baseBlock.blockType = BlockTypeLinkPreview
 		dto.LinkPreview.baseBlock = baseBlock
 		return dto.LinkPreview, nil
 	case BlockTypeLinkToPage:
+		baseBlock.blockType = BlockTypeLinkToPage
 		dto.LinkToPage.baseBlock = baseBlock
 		return dto.LinkToPage, nil
 	case BlockTypeSyncedBlock:
+		baseBlock.blockType = BlockTypeSyncedBlock
 		dto.SyncedBlock.baseBlock = baseBlock
 		return dto.SyncedBlock, nil
 	case BlockTypeTemplate:
+		baseBlock.blockType = BlockTypeTemplate
 		dto.Template.baseBlock = baseBlock
 		return dto.Template, nil
 	case BlockTypeUnsupported:
+		baseBlock.blockType = BlockTypeUnsupported
 		dto.Unsupported.baseBlock = baseBlock
 		return dto.Unsupported, nil
 	default:
