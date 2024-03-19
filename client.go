@@ -201,7 +201,7 @@ func (c *Client) UpdateDatabase(ctx context.Context, databaseID string, params U
 }
 
 // FindPageByID fetches a page by ID.
-// See: https://developers.notion.com/reference/get-page
+// See: https://developers.notion.com/reference/retrieve-a-page
 func (c *Client) FindPageByID(ctx context.Context, id string) (page Page, err error) {
 	req, err := c.newRequest(ctx, http.MethodGet, "/pages/"+id, nil)
 	if err != nil {
