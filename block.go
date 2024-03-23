@@ -24,6 +24,7 @@ type Block interface {
 	BlockType() BlockType
 	Extras() interface{}
 	Children() []Block
+	SetChildren([]Block)
 	json.Marshaler
 }
 
@@ -130,6 +131,10 @@ func (b baseBlock) Extras() interface{} {
 
 func (b baseBlock) Children() []Block {
 	return b.children
+}
+
+func (b baseBlock) SetChildren(children []Block) {
+	b.children = children
 }
 
 type ParagraphBlock struct {
