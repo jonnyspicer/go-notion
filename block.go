@@ -23,6 +23,7 @@ type Block interface {
 	Archived() bool
 	BlockType() BlockType
 	Extras() interface{}
+	Children() []Block
 	json.Marshaler
 }
 
@@ -83,6 +84,7 @@ type baseBlock struct {
 	archived       bool
 	blockType      BlockType
 	extras         interface{}
+	children       []Block
 }
 
 // ID returns the identifier (UUIDv4) for the block.
@@ -124,6 +126,10 @@ func (b baseBlock) BlockType() BlockType {
 
 func (b baseBlock) Extras() interface{} {
 	return b.extras
+}
+
+func (b baseBlock) Children() []Block {
+	return b.children
 }
 
 type ParagraphBlock struct {
