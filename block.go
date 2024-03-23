@@ -23,6 +23,7 @@ type Block interface {
 	Archived() bool
 	BlockType() BlockType
 	Extras() interface{}
+	SetExtras(interface{})
 	ChildBlocks() []Block
 	SetChildBlocks([]Block)
 	json.Marshaler
@@ -127,6 +128,10 @@ func (b baseBlock) BlockType() BlockType {
 
 func (b baseBlock) Extras() interface{} {
 	return b.extras
+}
+
+func (b *baseBlock) SetExtras(extras interface{}) {
+	b.extras = extras
 }
 
 func (b baseBlock) ChildBlocks() []Block {
