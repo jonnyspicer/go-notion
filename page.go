@@ -75,7 +75,7 @@ type CreatePageParams struct {
 	DatabasePageProperties *DatabasePageProperties
 	Title                  []RichText
 
-	// Optionally, children blocks are added to the page.
+	// Optionally, childBlocks blocks are added to the page.
 	Children []Block
 
 	Icon  *Icon
@@ -221,7 +221,7 @@ func (p CreatePageParams) MarshalJSON() ([]byte, error) {
 	type CreatePageParamsDTO struct {
 		Parent     Parent      `json:"parent"`
 		Properties interface{} `json:"properties"`
-		Children   []Block     `json:"children,omitempty"`
+		Children   []Block     `json:"childBlocks,omitempty"`
 		Icon       *Icon       `json:"icon,omitempty"`
 		Cover      *Cover      `json:"cover,omitempty"`
 	}

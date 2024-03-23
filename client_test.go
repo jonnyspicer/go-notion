@@ -1899,7 +1899,7 @@ func TestCreatePage(t *testing.T) {
 						},
 					},
 				},
-				"children": []interface{}{
+				"childBlocks": []interface{}{
 					map[string]interface{}{
 						"paragraph": map[string]interface{}{
 							"rich_text": []interface{}{
@@ -2046,7 +2046,7 @@ func TestCreatePage(t *testing.T) {
 						},
 					},
 				},
-				"children": []interface{}{
+				"childBlocks": []interface{}{
 					map[string]interface{}{
 						"paragraph": map[string]interface{}{
 							"rich_text": []interface{}{
@@ -3198,7 +3198,7 @@ func TestFindBlockChildrenById(t *testing.T) {
 			},
 			respStatusCode: http.StatusBadRequest,
 			expResponse:    notion.BlockChildrenResponse{},
-			expError:       errors.New("notion: failed to find block children: foobar (code: validation_error, status: 400)"),
+			expError:       errors.New("notion: failed to find block childBlocks: foobar (code: validation_error, status: 400)"),
 		},
 	}
 
@@ -3354,7 +3354,7 @@ func TestAppendBlockChildren(t *testing.T) {
 			},
 			respStatusCode: http.StatusOK,
 			expPostBody: map[string]interface{}{
-				"children": []interface{}{
+				"childBlocks": []interface{}{
 					map[string]interface{}{
 						"paragraph": map[string]interface{}{
 							"rich_text": []interface{}{
@@ -3424,7 +3424,7 @@ func TestAppendBlockChildren(t *testing.T) {
 			},
 			respStatusCode: http.StatusBadRequest,
 			expPostBody: map[string]interface{}{
-				"children": []interface{}{
+				"childBlocks": []interface{}{
 					map[string]interface{}{
 						"paragraph": map[string]interface{}{
 							"rich_text": []interface{}{
@@ -3439,7 +3439,7 @@ func TestAppendBlockChildren(t *testing.T) {
 				},
 			},
 			expResponse: notion.BlockChildrenResponse{},
-			expError:    errors.New("notion: failed to append block children: foobar (code: validation_error, status: 400)"),
+			expError:    errors.New("notion: failed to append block childBlocks: foobar (code: validation_error, status: 400)"),
 		},
 	}
 

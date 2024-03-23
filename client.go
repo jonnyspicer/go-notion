@@ -300,10 +300,10 @@ func (c *Client) UpdatePage(ctx context.Context, pageID string, params UpdatePag
 	return page, nil
 }
 
-// FindBlockChildrenByID returns a list of block children for a given block ID.
+// FindBlockChildrenByID returns a list of block childBlocks for a given block ID.
 // See: https://developers.notion.com/reference/post-database-query
 func (c *Client) FindBlockChildrenByID(ctx context.Context, blockID string, query *PaginationQuery) (result BlockChildrenResponse, err error) {
-	req, err := c.newRequest(ctx, http.MethodGet, fmt.Sprintf("/blocks/%v/children", blockID), nil)
+	req, err := c.newRequest(ctx, http.MethodGet, fmt.Sprintf("/blocks/%v/childBlocks", blockID), nil)
 	if err != nil {
 		return BlockChildrenResponse{}, fmt.Errorf("notion: invalid request: %w", err)
 	}
@@ -326,7 +326,7 @@ func (c *Client) FindBlockChildrenByID(ctx context.Context, blockID string, quer
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		return BlockChildrenResponse{}, fmt.Errorf("notion: failed to find block children: %w", parseErrorResponse(res))
+		return BlockChildrenResponse{}, fmt.Errorf("notion: failed to find block childBlocks: %w", parseErrorResponse(res))
 	}
 
 	err = json.NewDecoder(res.Body).Decode(&result)
@@ -378,7 +378,7 @@ func (c *Client) FindPagePropertyByID(ctx context.Context, pageID, propID string
 // See: https://developers.notion.com/reference/patch-block-children
 func (c *Client) AppendBlockChildren(ctx context.Context, blockID string, children []Block) (result BlockChildrenResponse, err error) {
 	type PostBody struct {
-		Children []Block `json:"children"`
+		Children []Block `json:"childBlocks"`
 	}
 
 	dto := PostBody{children}
@@ -389,7 +389,7 @@ func (c *Client) AppendBlockChildren(ctx context.Context, blockID string, childr
 		return BlockChildrenResponse{}, fmt.Errorf("notion: failed to encode body params to JSON: %w", err)
 	}
 
-	req, err := c.newRequest(ctx, http.MethodPatch, fmt.Sprintf("/blocks/%v/children", blockID), body)
+	req, err := c.newRequest(ctx, http.MethodPatch, fmt.Sprintf("/blocks/%v/childBlocks", blockID), body)
 	if err != nil {
 		return BlockChildrenResponse{}, fmt.Errorf("notion: invalid request: %w", err)
 	}
@@ -401,7 +401,7 @@ func (c *Client) AppendBlockChildren(ctx context.Context, blockID string, childr
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		return BlockChildrenResponse{}, fmt.Errorf("notion: failed to append block children: %w", parseErrorResponse(res))
+		return BlockChildrenResponse{}, fmt.Errorf("notion: failed to append block childBlocks: %w", parseErrorResponse(res))
 	}
 
 	err = json.NewDecoder(res.Body).Decode(&result)
