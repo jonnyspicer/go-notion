@@ -21,6 +21,7 @@ type Page struct {
 	URL            string    `json:"url"`
 	Icon           *Icon     `json:"icon,omitempty"`
 	Cover          *Cover    `json:"cover,omitempty"`
+	Blocks         []Block   `json:"blocks,omitempty"`
 
 	// Properties differ between parent type.
 	// See the `UnmarshalJSON` method.
