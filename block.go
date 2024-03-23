@@ -133,7 +133,7 @@ func (b baseBlock) ChildBlocks() []Block {
 	return b.childBlocks
 }
 
-func (b baseBlock) SetChildBlocks(childBlocks []Block) {
+func (b *baseBlock) SetChildBlocks(childBlocks []Block) {
 	b.childBlocks = childBlocks
 }
 
